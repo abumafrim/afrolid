@@ -20,7 +20,7 @@ setup(name='afrolid',
           'regex',
           'torch',
           'sentencepiece',
-          'fairseq==0.12.1',
+          'fairseq==0.12.0',
           'tqdm',
         ],
       entry_points={
