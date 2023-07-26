@@ -26,6 +26,8 @@ class classifier():
     afrolid_task = tasks.setup_task(args)
     models, _model_args = checkpoint_utils.load_model_ensemble([self.model_path+"/afrolid_v1_checkpoint.pt"], task=afrolid_task)
     model = models[0]
+    if torch.cuda.is_available():
+      model.to('cuda')
     model.eval()
     tokenizer = spm.SentencePieceProcessor()
     tokenizer.Load(self.model_path+"/afrolid_spm_517_bpe.model")
