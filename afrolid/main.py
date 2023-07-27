@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from afrolid import tasks
 import argparse
-from fairseq import checkpoint_utils, data
+from fairseq import checkpoint_utils, data, utils
 import torch
 import torch.nn.functional as F
 import regex
@@ -64,11 +64,8 @@ class classifier():
                 input_feeding=True,
                 pad_to_length={'source': 128, 'target': 1},
             )
-    
-    if torch.cuda.is_available():
-      batch.to('cuda')
     # print(batch)
-    outputs = self.model(**batch['net_input'])
+    outputs = self.model(utils.move_to_cuda(**batch['net_input'])) if torch.cuda.is_available() else self.model(**batch['net_input'])
     probabilities, predictions_idx = F.softmax(outputs[0], dim=-1).topk(k=max_outputs)
     # print()
     results={}
