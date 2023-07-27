@@ -66,7 +66,7 @@ class classifier():
             )
     
     if torch.cuda.is_available():
-      batch..to('cuda')
+      batch.to('cuda')
     # print(batch)
     outputs = self.model(**batch['net_input'])
     probabilities, predictions_idx = F.softmax(outputs[0], dim=-1).topk(k=max_outputs)
